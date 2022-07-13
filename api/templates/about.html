@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Welcome, {{ user.username }}!</h2>
+    <a href="{% url 'home' %}">Go Home</a><br>
+  <p>
+  We are a group of Django enthusiasts with the following idiosyncrasies:
+
+  <ol>
+    <li>We only eat bananas on Saturdays.</li>
+    <li>We love making playing football on rainy days.</li>
+  </ol>
+  </p>
+{% endblock %}

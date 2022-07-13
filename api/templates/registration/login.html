@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style type="text/css">
+.f1{
+background-color: lightblue;
+}
+</style>
+</head>
+<body class= "f1">
+<center>
+{% block title %}Login{% endblock %}
+
+{% block content %}
+ 
+  <h2>Login hi</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+  </form>
+  <a href="changepassword/">forget password   </a>
+  <a href="http://127.0.0.1:8000/admin/auth/user/add/">Register yourself</a>
+   </center>
+{% endblock %}
+{% load static %}
+<!-- <img src="{% static "polls/AnalyticsGroupCFLily-min.jpg" %}" alt="My image"/>
+<img src="{%static "polls/spring-framework-core-9-1024.jpg" %}" alt="my pic"/> -->
+</body>
+</html>

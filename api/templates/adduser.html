@@ -1,0 +1,338 @@
+<html lang="en-us"><head>
+<title>Add user | E-Mall Site Admin</title>
+<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+
+
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+<script type="text/javascript" src="/static/admin/js/core.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/static/admin/js/actions.js"></script>
+<script type="text/javascript" src="/static/admin/js/urlify.js"></script>
+<script type="text/javascript" src="/static/admin/js/prepopulate.js"></script>
+<script type="text/javascript" src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
+<script type="text/javascript" src="/static/admin/js/inlines.js"></script>
+
+
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">
+    
+
+<meta name="robots" content="NONE,NOARCHIVE">
+</head>
+
+
+<body class=" app-auth model-user change-form" data-admin-utc-offset="0">
+
+<!-- Container -->
+<div id="container">
+
+    
+    <!-- Header -->
+    <div id="header">
+        <div id="branding">
+		</div>
+        <div id="user-tools">
+        </div>
+        
+        
+        
+    </div>
+    <!-- END Header -->
+    
+<div class="breadcrumbs">
+› Add user
+</div>
+
+    
+
+    
+        
+    
+
+    <!-- Content -->
+    <div id="content" class="colM">
+        
+        <h1>Add user</h1>
+        <div id="content-main">
+
+
+
+<form enctype="multipart/form-data" action="" method="post" id="user_form" novalidate=""><input type="hidden" name="csrfmiddlewaretoken" value="e8lIwX1gbRqAN7n2o7TvnTgmjznL3IrEKjhf4bnvQ441OUbb8thovh8eLnNjmZiD">
+  
+    <p>First, enter a username and password. Then, you'll be able to edit more user options.</p>
+  
+
+<div>
+
+
+
+
+
+
+
+  <fieldset class="module aligned wide">
+    
+    
+    
+        <div class="form-row field-email">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_email">E-mail:</label>
+                        
+                            <input type="email" name="email" required="" id="id_email" maxlength="75">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-username">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_username">Username:</label>
+                        
+                            <input type="text" name="username" required="" class="vTextField" maxlength="150" autofocus="" id="id_username">
+                        
+                    
+                    
+                        <div class="help">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-password1">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_password1">Password:</label>
+                        
+                            <input type="password" name="password1" required="" id="id_password1">
+                        
+                    
+                    
+                        <div class="help"><ul><li>Your password can't be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can't be a commonly used password.</li><li>Your password can't be entirely numeric.</li></ul></div>
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-password2">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_password2">Password confirmation:</label>
+                        
+                            <input type="password" name="password2" required="" id="id_password2">
+                        
+                    
+                    
+                        <div class="help">Enter the same password as before, for verification.</div>
+                    
+                </div>
+            
+        </div>
+    
+</fieldset>
+
+
+
+
+
+
+
+
+    
+<div class="js-inline-admin-formset inline-group" id="UserProfile-group" data-inline-type="stacked" data-inline-formset="{&quot;name&quot;: &quot;#UserProfile&quot;, &quot;options&quot;: {&quot;deleteText&quot;: &quot;Remove&quot;, &quot;addText&quot;: &quot;Add another User profile&quot;, &quot;prefix&quot;: &quot;UserProfile&quot;}}">
+<fieldset class="module ">
+  <h2>User</h2>
+<input type="hidden" name="UserProfile-TOTAL_FORMS" value="1" id="id_UserProfile-TOTAL_FORMS" autocomplete="off"><input type="hidden" name="UserProfile-INITIAL_FORMS" value="0" id="id_UserProfile-INITIAL_FORMS"><input type="hidden" name="UserProfile-MIN_NUM_FORMS" value="0" id="id_UserProfile-MIN_NUM_FORMS"><input type="hidden" name="UserProfile-MAX_NUM_FORMS" value="1" id="id_UserProfile-MAX_NUM_FORMS" autocomplete="off">
+
+
+<div class="inline-related dynamic-UserProfile" id="UserProfile-0">
+  <h3><b>User profile:</b>&nbsp;<span class="inline_label">#1</span>
+      
+    
+  </h3>
+  
+  
+    <fieldset class="module aligned ">
+    
+    
+    
+        <div class="form-row field-full_name">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_UserProfile-0-full_name">Full name:</label>
+                        
+                            <input type="text" name="UserProfile-0-full_name" id="id_UserProfile-0-full_name" maxlength="255" class="vTextField">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-address">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_UserProfile-0-address">Address:</label>
+                        
+                            <textarea name="UserProfile-0-address" cols="40" id="id_UserProfile-0-address" rows="10" class="vLargeTextField"></textarea>
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-phone_number">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_UserProfile-0-phone_number">Phone number:</label>
+                        
+                            <input type="text" name="UserProfile-0-phone_number" id="id_UserProfile-0-phone_number" maxlength="255" class="vTextField">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+</fieldset>
+
+  
+  
+  <input type="hidden" name="UserProfile-0-user" id="id_UserProfile-0-user">
+</div><div class="inline-related empty-form last-related" id="UserProfile-empty">
+  <h3><b>User profile:</b>&nbsp;<span class="inline_label">#2</span>
+      
+    
+  </h3>
+  
+  
+    <fieldset class="module aligned ">
+    
+    
+    
+        <div class="form-row field-full_name">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_UserProfile-__prefix__-full_name">Full name:</label>
+                        
+                            <input type="text" name="UserProfile-__prefix__-full_name" id="id_UserProfile-__prefix__-full_name" maxlength="255" class="vTextField">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-address">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_UserProfile-__prefix__-address">Address:</label>
+                        
+                            <textarea name="UserProfile-__prefix__-address" cols="40" id="id_UserProfile-__prefix__-address" rows="10" class="vLargeTextField"></textarea>
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-phone_number">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_UserProfile-__prefix__-phone_number">Phone number:</label>
+                        
+                            <input type="text" name="UserProfile-__prefix__-phone_number" id="id_UserProfile-__prefix__-phone_number" maxlength="255" class="vTextField">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+</fieldset>
+
+  
+  
+  <input type="hidden" name="UserProfile-__prefix__-user" id="id_UserProfile-__prefix__-user">
+</div>
+</fieldset>
+</div>
+
+
+
+
+
+
+
+<div class="submit-row">
+<input type="submit" value="Save" class="default" name="_save">
+
+
+<input type="submit" value="Save and add another" name="_addanother">
+<input type="submit" value="Save and continue editing" name="_continue">
+</div>
+
+
+
+    <script type="text/javascript" id="django-admin-form-add-constants" src="/static/admin/js/change_form.js" data-model-name="user">
+    </script>
+
+
+
+
+<script type="text/javascript" id="django-admin-prepopulated-fields-constants" src="/static/admin/js/prepopulate_init.js" data-prepopulated-fields="[]">
+</script>
+
+
+</div>
+</form></div>
+
+        
+        <br class="clear">
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
+
+
+</body></html>

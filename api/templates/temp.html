@@ -1,0 +1,60 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us</title>
+</head>
+<body>
+  <p>
+  We are a group of Django enthusiasts with the following idiosyncrasies:
+
+  <ol>
+    <li>We only eat bananas on Saturdays.</li>
+    <li>We love making playing football on rainy days.</li>
+	 <li>Saturdays is a rest day form all employee</li>
+  </ol>
+  </p>
+  <a href="/home">Go Home</a><br>
+  <a href="about/">About This Site</a>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django Forms Tutorial</title>
+</head>
+<body>
+{% csrf_token %}
+<h2>Django Custom Forms</h2>
+<form method="post">
+{% csrf_token %}
+    <table>
+        <tr>
+            <td>business_name:</td>
+            <td><input type="text" name="business_name"/></td>
+        </tr>
+        <tr>
+            <td>business_email:</td>
+            <td><input type="email" name="business_email"/></td>
+        </tr>
+        <tr>
+            <td>business_website:</td>
+            <td><input type="text" name="business_website"/></td>
+        </tr>
+		<tr>
+            <td>business_phone:</td>
+            <td><input type="text" name="business_phone"/></td>
+        </tr>
+        <tr>
+            <td>
+ 
+            </td>
+            <td>
+                <button onClick="getdata()">Submit Form</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

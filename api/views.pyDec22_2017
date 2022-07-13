@@ -1,0 +1,369 @@
+from django.shortcuts import render, redirect
+from rest_framework import generics, permissions, status
+from .models import Mall
+from .serializers import MallSerializer
+from .models import Shop
+from .serializers import ShopSerializer
+from django.contrib.auth.models import User
+from .serializers import UserSerializer
+from .models import Product
+from .serializers import ProductSerializer
+from django.http.response import HttpResponse
+import datetime
+#from .form import LoginForm, PasswordResetRequestForm
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from .models import Order
+from .serializers import OrderSerializer
+from .models import UserProfile
+from .serializers import UserProfileSerializer
+from django.template.context_processors import request
+from rest_framework.views import APIView
+from rest_framework.authentication import SessionAuthentication,\
+    BasicAuthentication
+from rest_framework.response import Response
+from .serializers import ChangePasswordSerializer, WishListSerializer
+from django.views.generic.edit import FormView
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from django.db.models.query_utils import Q
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.template import loader
+from django.core.mail import send_mail
+from django.conf.global_settings import DEFAULT_FROM_EMAIL
+from django.contrib import messages
+#from api.form import SetPasswordForm
+from django.contrib.auth import get_user_model
+from rest_framework.renderers import TemplateHTMLRenderer
+from api.models import WishList, Cart
+from api.serializers import CartSerializer
+
+# Create your views here.
+class createMallView(generics.ListCreateAPIView):
+    queryset = Mall.objects.all()
+    serializer_class = MallSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save()
+def model_form_upload(request):
+        if request.method == 'POST':
+            form = Mall(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('home')
+        else:
+            form = Mall()
+        return render(request, '/model_form_upload.html', {
+            'form': form
+        })
+      
+class detailsMallView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Mall.objects.all();
+    serializer_class = MallSerializer
+    
+class createShopView(generics.ListCreateAPIView):
+    queryset = Shop.objects.all()
+    serializer_class = ShopSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save()
+
+class detailsShopView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Shop.objects.all();
+    serializer_class = ShopSerializer
+    
+class fetchDataview(generics.RetrieveAPIView):
+    queryset = Shop.objects.raw(' select shop.name, shoptype.id from shop LEFT JOIN shoptype on shop.id=shoptype.id order by shop.shop.name')
+    serializer_class = ShopSerializer
+    
+class viewUserTable(generics.ListCreateAPIView):
+    queryset = User.objects.raw('select * from auth_user')
+    serializer_class = UserSerializer
+    
+class createProductView(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save()
+
+class detailsProductView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    
+"""def hello(request):
+    today = datetime.datetime.now().date()
+    daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    return redirect("https://www.djangoproject.com")
+    #return render(request, "test.html", {"today" : today, "days_of_week" : daysOfWeek})
+
+def viewArticle(request, articleId):
+   text = "Displaying article Number : %s"%articleId
+   return HttpResponse(text)
+
+
+def login(request):
+   username = "not logged in"
+   
+   if request.method == "POST":
+      #Get the posted form
+      MyLoginForm = LoginForm(request.POST)
+      
+      if MyLoginForm.is_valid():
+         username = MyLoginForm.cleaned_data['username']
+   else:
+        MyLoginForm = LoginForm()
+     
+        
+   return render(request, 'loggedin.html', {"username" : username})"""
+    
+class MallsList(generics.ListAPIView):
+    queryset = Mall.objects.all()
+    serializer_class = MallSerializer
+    permission_classes = (IsAdminUser,)
+     
+        
+class Shoplist(generics.ListAPIView):
+    queryset = Shop.objects.all()
+    serializer_class = ShopSerializer
+    permission_classes = (IsAdminUser,)
+    
+class Productlist(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class  = ProductSerializer
+    permission_class = (IsAdminUser,)
+
+class SearchProductlist(generics.ListAPIView):
+    serializer_class  = ProductSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        return Product.objects.filter(P_name=user)
+    
+class OrderCreateView(generics.CreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class  = OrderSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save()
+#filter_backends = (filters.DjangoFilterBackend,filters.OrderingFilter,)
+#filter_fields = ('completed',)
+
+class OrderDeatilsView(generics.RetrieveAPIView):
+    queryset = Order.objects.all()
+    serializer_class  = OrderSerializer
+    
+class OrderHistory(generics.ListAPIView):
+    queryset = Order.objects.raw('select * from api_historicalorder')
+    serializer_class  = OrderSerializer
+    
+
+"""class UserRegistration(generics.CreateAPIView):
+    queryset = UserProfile.objects.all()
+    serializer_class  = UserProfileSerializer
+    
+    def perform_create(self, serializer):
+        #def create(self, request):
+         #   user_id = request.DATA['user_id']
+            #id = User.UserProfile(user_id=user_id)
+            #id.save()
+        serializer.save()"""
+
+class UserRegistration(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class  = UserSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save()
+
+    
+    
+#class Orderhistory(generics.RetrieveAPIView):
+   # queryset = Order..all()
+    
+    
+"""class MallsFilterList(generics.ListAPIView):
+    queryset = Mall.objects.all()
+    serializer_class  = MallSerializer
+    filter_backends = (filters.backends)
+    
+class MallFilterList(filters.FilterSet):
+    class Meta:
+        model = Mall
+        fields = {'MName':['exact', 'in', 'startswith']}"""
+        
+
+class UserLogin(APIView):
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated,)
+    
+    def get(self, request, format=None):
+         content = {
+        'user': str(request.user),
+        'auth': str(request.auth),  
+        }
+         return Response(content)
+
+class UpdatePassword(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def put(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = ChangePasswordSerializer(data=request.data)
+
+        if serializer.is_valid():
+            # Check old password
+            old_password = serializer.data.get("old_password")
+            if not self.object.check_password(old_password):
+                return Response({"old_password": ["Wrong password."]}, 
+                                status=status.HTTP_400_BAD_REQUEST)
+            # set_password also hashes the password that the user will get
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+        
+"""def my_view(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        # Redirect to a success page.
+        ...
+    else
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            # Redirect to a success page.
+        else:
+            # Return a 'disabled account' error message
+    else:
+        # Return an 'invalid login' error message.
+    """
+class WishListCreate(generics.ListCreateAPIView):
+    queryset = WishList.objects.all()
+    serializer_class  = WishListSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save()
+
+class RemoveFromWishList(generics.DestroyAPIView):
+    queryset = WishList.objects.all()
+    serializer_class  = WishListSerializer
+    
+class CartCreate(generics.ListCreateAPIView):
+    queryset = Cart.objects.all()
+    serializer_class  = CartSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save()
+    
+    
+'''class ResetPasswordRequestView(FormView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "password_reset_email.html"    #code for template is given below the view's code
+    success_url = '/account/login'
+    form_class = PasswordResetRequestForm
+    
+    @staticmethod
+    def validate_email_address(email):
+        try:
+            validate_email(email)
+            return True
+        except ValidationError:
+            return False
+    
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            data= form.cleaned_data["email_or_username"]
+        if self.validate_email_address(data) is True: 
+            associated_users= User.objects.filter(Q(email=data)|Q(username=data))
+            if associated_users.exists():
+                for user in associated_users:
+                    c = {
+                         'email': user.email,
+                         'domain': request.META['HTTP_HOST'],
+                         'site_name': 'your site',
+                         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                         'user': user,
+                         'token': default_token_generator.make_token(user),
+                         'protocol': 'http',
+                         }
+                    subject_template_name='registration/password_reset_subject.txt' 
+                            # copied from django/contrib/admin/templates/registration/password_reset_subject.txt to templates directory
+                    email_template_name='registration/password_reset_email.html'    
+                            # copied from django/contrib/admin/templates/registration/password_reset_email.html to templates directory
+                    subject = loader.render_to_string(subject_template_name, c)
+                            # Email subject *must not* contain newlines
+                    subject = ''.join(subject.splitlines())
+                    email = loader.render_to_string(email_template_name, c)
+                    send_mail(subject, email, DEFAULT_FROM_EMAIL , [user.email], fail_silently=False)
+                result = self.form_valid(form)
+                messages.success(request, 'An email has been sent to ' + data +". Please check its inbox to continue reseting password.")
+                return result
+            else:
+                associated_users= User.objects.filter(username=data)
+                if associated_users.exists():
+                    for user in associated_users:
+                        c = {
+                            'email': user.email,
+                            'domain': 'example.com', #or your domain
+                            'site_name': 'example',
+                            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                            'user': user,
+                            'token': default_token_generator.make_token(user),
+                            'protocol': 'http',
+                            }
+                        subject_template_name='registration/password_reset_subject.txt'
+                        email_template_name='registration/password_reset_email.html'
+                        subject = loader.render_to_string(subject_template_name, c)
+                        # Email subject *must not* contain newlines
+                        subject = ''.join(subject.splitlines())
+                        email = loader.render_to_string(email_template_name, c)
+                        send_mail(subject, email, DEFAULT_FROM_EMAIL , [user.email], fail_silently=False)
+                    result = self.form_valid(form)
+                    messages.success(request, 'Email has been sent to ' + data +"'s email address. Please check its inbox to continue reseting password.")
+                    return result
+                result = self.form_invalid(form)
+                messages.error(request, 'This username does not exist in the system.')
+                return result
+            messages.error(request, 'Invalid Input')
+            return self.form_invalid(form)
+        
+class PasswordResetConfirmView(FormView):
+    template_name = "test_template.html"
+    success_url = '/admin/'
+    form_class = SetPasswordForm
+
+    def post(self, request, uidb64=None, token=None, *arg, **kwargs):
+        UserModel = get_user_model()
+        form = self.form_class(request.POST)
+        assert uidb64 is not None and token is not None  # checked by URLconf
+        try:
+            uid = urlsafe_base64_decode(uidb64)
+            user = UserModel._default_manager.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+            user = None
+
+        if user is not None and default_token_generator.check_token(user, token):
+            if form.is_valid():
+                new_password= form.cleaned_data['new_password2']
+                user.set_password(new_password)
+                user.save()
+                messages.success(request, 'Password has been reset.')
+                return self.form_valid(form)
+            else:
+                messages.error(request, 'Password reset has not been unsuccessful.')
+                return self.form_invalid(form)
+        else:
+            messages.error(request,'The reset password link is no longer valid.')
+            return self.form_invalid(form)
+    '''                

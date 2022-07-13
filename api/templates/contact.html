@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Welcome, {{ user.username }}!</h2>
+    <a href="{% url 'home' %}">Go Home</a><br>
+  <p><h2>Contact Us</h2>
+  We are a group of Django enthusiasts with the following idiosyncrasies:
+  <ol>
+    <li>share your query with our mail id-: help_your@gmail.com.</li>
+    <li>We are happy to help You.</li>
+  </ol>
+  </p>
+{% endblock %}
